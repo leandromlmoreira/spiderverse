@@ -7,7 +7,6 @@ import spDr14512 from "@/public/spiders/sp-dr-14512.png";
 import spiderHam8311 from "@/public/spiders/spider-ham-8311.png";
 import spiderMan90214 from "@/public/spiders/spider-man-90214.png";
 import spiderMan928 from "@/public/spiders/spider-man-928.png";
-
 import { IHeroData } from "@/app/interfaces/heroes";
 
 const heroesImage: Record<string, StaticImageData> = {

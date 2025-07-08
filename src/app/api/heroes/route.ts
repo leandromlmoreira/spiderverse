@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 import JSONData from "./heroes.json";
 
 export async function GET() {

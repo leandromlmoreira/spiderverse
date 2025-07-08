@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { IHeroData } from "../../interfaces/heroes";
 import HeroDetails from "../HeroDetails";
-import styles from "./carousel.module.scss";
 import HeroPicture from "../HeroPicture";
-import { AnimatePresence, motion } from "framer-motion";
+
+import styles from "./carousel.module.scss";
 
 enum enPosition {
   FRONT = 0,
