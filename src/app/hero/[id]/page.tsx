@@ -1,21 +1,17 @@
 import Carousel from "@/app/components/Carousel";
 import { IHeroData } from "@/app/interfaces/heroes";
 
-interface IProps {
-  params: {
-    id: string;
-  };
-}
 async function getHeroesData(): Promise<{ data: IHeroData[] }> {
-  const res = await fetch(`${process.env.DOMAIN_ORIGIN}/api/heroes`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch heroes data");
-  }
-  return res.json();
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/heroes`);
+    if (res.ok) return res.json();
+  } catch { }
+  const local = (await import("@/app/api/heroes/heroes.json")).default as IHeroData[];
+  return { data: local };
 }
 
-export default async function Hero({ params: { id } }: IProps) {
+export default async function Hero({ params }: any) {
   const heroes = await getHeroesData();
-  return <Carousel heroes = {heroes.data} activeId={id}/>;
+  return <Carousel heroes={heroes.data} activeId={params.id} />;
 }
 
