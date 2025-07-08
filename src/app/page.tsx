@@ -1,6 +1,7 @@
 import HeroesList from "./components/HeroesList";
 import { IHeroData } from "./interfaces/heroes";
 import styles from "./page.module.scss";
+import Carousel from "./components/Carousel";
 
 async function getHeroesData(): Promise<{ data: IHeroData[] }> {
   try {
@@ -15,15 +16,8 @@ async function getHeroesData(): Promise<{ data: IHeroData[] }> {
   return { data: local };
 }
 
-type HeroPageProps = {
-  params: { id: string };
-};
-
-export default async function Home() {
-  const { data: heroes } = await getHeroesData();
-  return (
-    <main className={styles.main}>
-      <HeroesList heroes={heroes} />
-    </main>
-  );
+export default async function Hero(props: { params: { id: string } }) {
+  const { params } = await props;        // aguarda a Promise de props
+  const heroes = await getHeroesData();
+  return <Carousel heroes={heroes.data} activeId={params.id} />;
 }
