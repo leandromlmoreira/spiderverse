@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+
 import spiderMan616 from "@/public/spiders/spider-man-616.png";
 import mulherAranha65 from "@/public/spiders/mulher-aranha-65.png";
 import spiderMan1610 from "@/public/spiders/spider-man-1610.png";
@@ -19,11 +20,11 @@ const heroesImage: Record<string, StaticImageData> = {
   "spider-man-928": spiderMan928,
 }
 
-interface IProps{
-  hero : IHeroData;
+interface IProps {
+  hero: IHeroData;
 }
 
-export default function HeroPicture({ hero }: IProps){
+export default function HeroPicture({ hero }: IProps) {
   return (
     <Image
       src={heroesImage[hero.id]}

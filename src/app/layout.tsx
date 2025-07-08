@@ -1,8 +1,8 @@
-import "./globals.scss";
 import Image from "next/image";
-
 import type { Metadata } from "next";
 import Link from "next/link";
+
+import "./globals.scss";
 
 export const metadata: Metadata = {
   title: "Aranha Verso",
@@ -26,13 +26,13 @@ export default function RootLayout({
             height={25}
           />
           <Link href="/">
-          <Image
-            src="/spider-logo.svg"
-            alt="Spiderman"
-            width={260}
-            height={70}
-            className="logo-animation"
-          />
+            <Image
+              src="/spider-logo.svg"
+              alt="Spiderman"
+              width={260}
+              height={70}
+              className="logo-animation"
+            />
           </Link>
           <Image src="/icons/user.svg" alt="Login" width={36} height={25} />
         </header>
