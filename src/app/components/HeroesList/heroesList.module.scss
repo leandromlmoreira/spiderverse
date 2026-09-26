@@ -26,6 +26,11 @@
 
 .imageContainer {
   position: relative;
+  transition: filter 0.3s ease;
+
+  &:focus-within {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.7));
+  }
 
   img {
     width: 100%;

@@ -1,5 +1,9 @@
 .container {
   display: flex;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .carousel {
@@ -7,6 +11,10 @@
   width: 100%;
   position: relative;
   left: -10%;
+
+  @media screen and (max-width: 768px) {
+    left: 0;
+  }
 }
 
 .wrapper {
@@ -17,12 +25,20 @@
   &:active {
     cursor: grabbing;
   }
+
+  @media screen and (max-width: 768px) {
+    height: 55vh;
+  }
 }
 
 .details {
   flex: 1;
   position: relative;
   margin-top: 3rem;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 1.5rem;
+  }
 }
 
 .hero {
@@ -30,6 +46,11 @@
   position: absolute;
   width: 500px;
   left: 0;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 320px;
+  }
 
   img {
     height: 100%;
