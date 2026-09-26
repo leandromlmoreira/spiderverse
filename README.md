@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aranha Verso
 
-## Getting Started
+Carrossel com efeito parallax dos heróis do Aranha-Verso, feito com Next.js (App Router), React, TypeScript e Framer Motion. Cada herói tem imagem, fundo e áudio próprios, além de um painel com informações e a primeira aparição nos quadrinhos.
 
-First, run the development server:
+## Funcionalidades
+
+- Carrossel com 3 heróis visíveis e troca por arrastar (mouse) ou deslizar (touch).
+- Fundo da página e áudio mudam de acordo com o herói em destaque.
+- Painel de detalhes: nome completo, data de nascimento, terra natal, altura, peso e capa da primeira aparição.
+- Rota por herói: `/hero/<id>` abre o carrossel já no herói escolhido (ex.: `/hero/spider-ham-8311`).
+- Rota de API `GET /api/heroes` que busca os dados na API externa e, se ela falhar, devolve o JSON local.
+
+## Tecnologias
+
+- [Next.js 15](https://nextjs.org/) (App Router) + React 19
+- TypeScript
+- [Framer Motion](https://motion.dev/) para as animações
+- Sass (CSS Modules)
+- ESLint + Prettier
+
+## Como rodar
+
+Pré-requisito: Node.js 18.18 ou mais recente.
 
 ```bash
+git clone https://github.com/leandromlmoreira/spiderverse.git
+cd spiderverse
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Outros scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comando | O que faz |
+|---|---|
+| `npm run build` | build de produção |
+| `npm start` | sobe o build de produção |
+| `npm run lint` | roda o ESLint |
 
-## Learn More
+## Dados dos heróis
 
-To learn more about Next.js, take a look at the following resources:
+A URL da API fica em `next.config.ts` (`API_URL`, hoje um endpoint do MockAPI). As páginas buscam `${API_URL}/api/heroes`; se a requisição falhar, usam o arquivo local `src/app/api/heroes/heroes.json`, então o projeto funciona mesmo sem a API externa.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estrutura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/app/
+├── page.tsx               # home: carrossel com todos os heróis
+├── hero/[id]/page.tsx     # carrossel começando no herói da URL
+├── api/heroes/            # rota GET /api/heroes + heroes.json (fallback local)
+├── components/
+│   ├── Carousel/          # carrossel, troca de herói, fundo e áudio
+│   ├── HeroDetails/       # painel de informações do herói
+│   ├── HeroPicture/       # imagem de cada herói
+│   └── HeroesList/        # grade de heróis com link para /hero/<id> (não usada nas páginas hoje)
+├── interfaces/heroes.tsx  # tipo IHeroData
+└── fonts/                 # fonte do logo
+public/
+├── spiders/               # imagens, fundos e capas dos quadrinhos
+└── songs/                 # áudios de cada herói e da transição
+```
