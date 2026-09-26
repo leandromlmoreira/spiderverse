@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./heroDetails.module.scss";
 
 import { spidermanFont } from "@/app/fonts";
+import { basePath } from "@/app/basePath";
 import { IHeroData } from "@/app/interfaces/heroes";
 
 const quicksand = Quicksand({
@@ -53,7 +54,7 @@ export default function HeroDetails({ data }: IProps) {
       <div className={styles.details}>
         <h2 className={styles.subtitle}>Primeira Aparição</h2>
         <Image
-          src={`/spiders/${id}-comic-book.png`}
+          src={`${basePath}/spiders/${id}-comic-book.png`}
           alt={`${name} - Primeira aparição nos quadrinhos de ${name}`}
           width={80}
           height={122}

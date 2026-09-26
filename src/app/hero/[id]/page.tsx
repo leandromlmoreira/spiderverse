@@ -10,6 +10,11 @@ async function getHeroesData(): Promise<{ data: IHeroData[] }> {
   return { data: local };
 }
 
+export async function generateStaticParams() {
+  const heroes = (await import("@/app/api/heroes/heroes.json")).default as IHeroData[];
+  return heroes.map((hero) => ({ id: hero.id }));
+}
+
 export default async function Hero({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const heroes = await getHeroesData();
