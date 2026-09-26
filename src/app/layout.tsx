@@ -1,49 +1,25 @@
-import Image from "next/image";
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata, Viewport } from "next";
 
 import "./globals.scss";
 
-import { basePath } from "./basePath";
+import { displayFont, textFont } from "./fonts";
+import TransitionProvider from "./components/PageTransition/TransitionProvider";
 
 export const metadata: Metadata = {
-  title: "Aranha Verso",
+  title: "Aranhaverso — Índice do Multiverso",
   description:
-    "Criando um carrossel Parallax do Aranha Verso com React, Next.js, TypeScript e Framer Motion",
+    "Uma revista em quadrinhos interativa com os heróis do Aranhaverso: carrossel com parallax, glitch dimensional e uma edição para cada universo.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#07070c",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={`${displayFont.variable} ${textFont.variable}`}>
       <body>
-        <header>
-          <Image
-            src={`${basePath}/icons/menu.svg`}
-            alt="Opções de Menu"
-            width={36}
-            height={25}
-          />
-          <Link href="/">
-            <Image
-              src={`${basePath}/spider-logo.svg`}
-              alt="Spiderman"
-              width={260}
-              height={70}
-              className="logo-animation"
-            />
-          </Link>
-          <Image
-            src={`${basePath}/icons/user.svg`}
-            alt="Login"
-            width={36}
-            height={25}
-          />
-        </header>
-        {children}
+        <TransitionProvider>{children}</TransitionProvider>
       </body>
     </html>
   );

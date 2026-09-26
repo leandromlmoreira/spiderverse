@@ -1,0 +1,61 @@
+.slot {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.panel {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  border: 3.5px solid var(--ink);
+  color: var(--ink);
+  padding: 22px 24px;
+  isolation: isolate;
+}
+
+.white {
+  background: #fffdf6;
+}
+
+.paper {
+  background-color: var(--paper-shade);
+  background-image: radial-gradient(circle, rgba(13, 13, 18, 0.12) 1.2px, transparent 1.6px);
+  background-size: 9px 9px;
+}
+
+.ink {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.yellow {
+  background: var(--yellow);
+}
+
+.accent {
+  background-color: var(--secondary);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.35) 1.6px, transparent 2.1px);
+  background-size: 11px 11px;
+}
+
+.theme {
+  color: var(--white);
+  background: radial-gradient(110% 90% at 70% 35%, var(--glow) 0%, var(--base) 60%, #040406 100%);
+}
+
+.label {
+  position: absolute;
+  top: -3.5px;
+  left: -3.5px;
+  z-index: 3;
+  margin: 0;
+  padding: 6px 12px 5px;
+  background: var(--yellow);
+  border: 3.5px solid var(--ink);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
