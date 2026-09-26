@@ -92,10 +92,9 @@ export default function Carousel({ heroes, activeId }: IProps) {
   const handleChangeDrag = (endX: number) => {
     if (startInteractionPosition === null) return;
     const diff = endX - startInteractionPosition;
-    // Threshold para não acionar com pequenos movimentos
     if (Math.abs(diff) < 30) return;
 
-    const newDirection = diff > 0 ? -1 : 1; // direita->volta, esquerda->avança
+    const newDirection = diff > 0 ? -1 : 1;
     handleChangeActiveIndex(newDirection);
     setStartInteractionPosition(null);
   };
