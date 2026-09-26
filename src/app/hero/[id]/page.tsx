@@ -10,9 +10,8 @@ async function getHeroesData(): Promise<{ data: IHeroData[] }> {
   return { data: local };
 }
 
-export default async function Hero(props: { params: { id: string } }) {
-  const { params } = await props;
+export default async function Hero({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const heroes = await getHeroesData();
-  return <Carousel heroes={heroes.data} activeId={params.id} />;
+  return <Carousel heroes={heroes.data} activeId={id} />;
 }
-
