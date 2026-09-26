@@ -1,6 +1,4 @@
-import HeroesList from "./components/HeroesList";
 import { IHeroData } from "./interfaces/heroes";
-import styles from "./page.module.scss";
 import Carousel from "./components/Carousel";
 
 async function getHeroesData(): Promise<{ data: IHeroData[] }> {
@@ -16,8 +14,8 @@ async function getHeroesData(): Promise<{ data: IHeroData[] }> {
   return { data: local };
 }
 
-export default async function Hero(props: { params: { id: string } }) {
-  const { params } = await props;        // aguarda a Promise de props
+// A home não tem parâmetro de rota: abre o carrossel no primeiro herói da lista.
+export default async function Home() {
   const heroes = await getHeroesData();
-  return <Carousel heroes={heroes.data} activeId={params.id} />;
+  return <Carousel heroes={heroes.data} activeId={heroes.data[0]?.id} />;
 }
