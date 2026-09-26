@@ -1,0 +1,65 @@
+.flash {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    mix-blend-mode: screen;
+    opacity: 0;
+    animation: tear 460ms steps(6, end) forwards;
+  }
+}
+
+.cyan {
+  top: 18%;
+  height: 9%;
+  background: var(--cyan);
+}
+
+.magenta {
+  top: 52%;
+  height: 5%;
+  background: var(--magenta);
+  animation-delay: 60ms !important;
+}
+
+.yellow {
+  top: 71%;
+  height: 3%;
+  background: var(--yellow);
+  animation-delay: 110ms !important;
+}
+
+.scan {
+  top: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 5px);
+  animation-duration: 380ms !important;
+}
+
+@keyframes tear {
+  0% {
+    opacity: 0.85;
+    transform: translateX(-12%) scaleY(1);
+  }
+
+  40% {
+    opacity: 0.6;
+    transform: translateX(8%) scaleY(0.4);
+  }
+
+  70% {
+    opacity: 0.35;
+    transform: translateX(-4%) scaleY(1.4);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(0) scaleY(0);
+  }
+}

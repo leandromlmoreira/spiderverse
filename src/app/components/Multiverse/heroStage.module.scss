@@ -1,0 +1,70 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: pan-y;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.parallax {
+  position: absolute;
+  inset: 0;
+}
+
+.floor {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5%;
+  width: 46%;
+  height: 7%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.65), transparent);
+}
+
+.figure {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  will-change: transform, filter;
+}
+
+.figureInner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+
+  img {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+.registered {
+  filter: drop-shadow(3px 0 0 rgba(0, 212, 255, 0.55)) drop-shadow(-3px 0 0 rgba(255, 31, 143, 0.55));
+}
+
+.mono img {
+  filter: grayscale(1) contrast(1.15);
+}
+
+.silhouette {
+  width: 40%;
+  height: 90%;
+  border-radius: 40% 40% 12% 12%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 1.5px, transparent 2px) 0 0 / 9px 9px, var(--ink);
+}

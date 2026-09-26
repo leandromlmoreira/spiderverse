@@ -1,22 +1,32 @@
-import Carousel from "@/app/components/Carousel";
-import { IHeroData } from "@/app/interfaces/heroes";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-async function getHeroesData(): Promise<{ data: IHeroData[] }> {
-  try {
-    const res = await fetch(`${process.env.API_URL}/api/heroes`);
-    if (res.ok) return res.json();
-  } catch { }
-  const local = (await import("@/app/api/heroes/heroes.json")).default as IHeroData[];
-  return { data: local };
+import ComicIssue from "@/app/components/ComicIssue";
+import { findIssue, getHeroIds, getHeroes } from "@/app/data/heroes";
+
+interface IProps {
+  params: Promise<{ id: string }>;
 }
 
-export async function generateStaticParams() {
-  const heroes = (await import("@/app/api/heroes/heroes.json")).default as IHeroData[];
-  return heroes.map((hero) => ({ id: hero.id }));
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getHeroIds().map((id) => ({ id }));
 }
 
-export default async function Hero({ params }: { params: Promise<{ id: string }> }) {
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { id } = await params;
-  const heroes = await getHeroesData();
-  return <Carousel heroes={heroes.data} activeId={id} />;
+  const issue = findIssue(await getHeroes(), id);
+  if (!issue) return {};
+  return {
+    title: `${issue.hero.name} · Terra-${issue.hero.universe} — Aranhaverso`,
+    description: `Edição #${issue.hero.universe}: ficha de ${issue.hero.details.fullName}, primeira aparição e muito mais.`,
+  };
+}
+
+export default async function HeroPage({ params }: IProps) {
+  const { id } = await params;
+  const issue = findIssue(await getHeroes(), id);
+  if (!issue) notFound();
+  return <ComicIssue issue={issue} />;
 }

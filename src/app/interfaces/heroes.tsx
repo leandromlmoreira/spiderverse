@@ -4,7 +4,7 @@ export interface IHeroData {
   universe: number;
   details: {
     fullName: string;
-    birthday: string;
+    birthday: string | null;
     homeland: string;
     height: number;
     weight: number;
