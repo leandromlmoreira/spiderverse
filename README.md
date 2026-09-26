@@ -1,6 +1,10 @@
-# Aranha Verso
+# Spiderverse — Galeria de Heróis
 
-Carrossel com efeito parallax dos heróis do Aranha-Verso, feito com Next.js (App Router), React, TypeScript e Framer Motion. Cada herói tem imagem, fundo e áudio próprios, além de um painel com informações e a primeira aparição nos quadrinhos.
+Carrossel com efeito parallax dos heróis do Aranha-Verso, com uma página de detalhes por personagem, trilha sonora e visual próprios de cada universo.
+
+**[Ver ao vivo](https://leandromlmoreira.github.io/spiderverse/)**
+
+![Preview](docs/preview.png)
 
 ## Funcionalidades
 
@@ -8,9 +12,9 @@ Carrossel com efeito parallax dos heróis do Aranha-Verso, feito com Next.js (Ap
 - Fundo da página e áudio mudam de acordo com o herói em destaque.
 - Painel de detalhes: nome completo, data de nascimento, terra natal, altura, peso e capa da primeira aparição.
 - Rota por herói: `/hero/<id>` abre o carrossel já no herói escolhido (ex.: `/hero/spider-ham-8311`).
-- Rota de API `GET /api/heroes` que busca os dados na API externa e, se ela falhar, devolve o JSON local.
+- Layout responsivo, com estados de foco visível para navegação por teclado.
 
-## Tecnologias
+## Stack
 
 - [Next.js 15](https://nextjs.org/) (App Router) + React 19
 - TypeScript
@@ -29,19 +33,23 @@ npm install
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000).
+Abra [http://localhost:3000/spiderverse](http://localhost:3000/spiderverse).
 
 Outros scripts:
 
 | Comando | O que faz |
 |---|---|
-| `npm run build` | build de produção |
+| `npm run build` | gera o site estático em `out/` |
 | `npm start` | sobe o build de produção |
 | `npm run lint` | roda o ESLint |
 
 ## Dados dos heróis
 
-A URL da API fica em `next.config.ts` (`API_URL`, hoje um endpoint do MockAPI). As páginas buscam `${API_URL}/api/heroes`; se a requisição falhar, usam o arquivo local `src/app/api/heroes/heroes.json`, então o projeto funciona mesmo sem a API externa.
+Os dados de cada herói vêm do arquivo local `src/app/api/heroes/heroes.json`. As páginas tentam primeiro buscar a mesma lista na API pública configurada em `next.config.ts` (`API_URL`, um endpoint do MockAPI) e, se a requisição falhar, usam o arquivo local — o site funciona normalmente mesmo sem a API externa.
+
+## Deploy
+
+O site é publicado como export estático (`output: "export"`) no GitHub Pages via GitHub Actions a cada push na `main` (veja `.github/workflows/deploy-pages.yml`).
 
 ## Estrutura
 
@@ -49,7 +57,7 @@ A URL da API fica em `next.config.ts` (`API_URL`, hoje um endpoint do MockAPI). 
 src/app/
 ├── page.tsx               # home: carrossel com todos os heróis
 ├── hero/[id]/page.tsx     # carrossel começando no herói da URL
-├── api/heroes/            # rota GET /api/heroes + heroes.json (fallback local)
+├── api/heroes/            # heroes.json (fonte local dos dados)
 ├── components/
 │   ├── Carousel/          # carrossel, troca de herói, fundo e áudio
 │   ├── HeroDetails/       # painel de informações do herói

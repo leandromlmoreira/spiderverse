@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { IHeroData } from "../../interfaces/heroes";
+import { basePath } from "../../basePath";
 import HeroDetails from "../HeroDetails";
 import HeroPicture from "../HeroPicture";
 
@@ -28,19 +29,19 @@ export default function Carousel({ heroes, activeId }: IProps) {
 
   const transitionAudio = useMemo(() => {
     if (typeof window === "undefined") return null;
-    return new Audio("/songs/transition.mp3");
+    return new Audio(`${basePath}/songs/transition.mp3`);
   }, []);
 
   const voicesAudio: Record<string, HTMLAudioElement> = useMemo(() => {
     if (typeof window === "undefined") return {} as Record<string, HTMLAudioElement>;
     return {
-      "spider-man-616": new Audio("/songs/spider-man-616.mp3"),
-      "mulher-aranha-65": new Audio("/songs/mulher-aranha-65.mp3"),
-      "spider-man-1610": new Audio("/songs/spider-man-1610.mp3"),
-      "sp-dr-14512": new Audio("/songs/sp-dr-14512.mp3"),
-      "spider-ham-8311": new Audio("/songs/spider-ham-8311.mp3"),
-      "spider-man-90214": new Audio("/songs/spider-man-90214.mp3"),
-      "spider-man-928": new Audio("/songs/spider-man-928.mp3"),
+      "spider-man-616": new Audio(`${basePath}/songs/spider-man-616.mp3`),
+      "mulher-aranha-65": new Audio(`${basePath}/songs/mulher-aranha-65.mp3`),
+      "spider-man-1610": new Audio(`${basePath}/songs/spider-man-1610.mp3`),
+      "sp-dr-14512": new Audio(`${basePath}/songs/sp-dr-14512.mp3`),
+      "spider-ham-8311": new Audio(`${basePath}/songs/spider-ham-8311.mp3`),
+      "spider-man-90214": new Audio(`${basePath}/songs/spider-man-90214.mp3`),
+      "spider-man-928": new Audio(`${basePath}/songs/spider-man-928.mp3`),
     };
   }, []);
 
@@ -60,7 +61,7 @@ export default function Carousel({ heroes, activeId }: IProps) {
     if (visibleItems.length > enPosition.MIDDLE) {
       const currentHeroId = visibleItems[enPosition.MIDDLE].id;
 
-      htmlEl.style.backgroundImage = `url("/spiders/${currentHeroId}-background.png")`;
+      htmlEl.style.backgroundImage = `url("${basePath}/spiders/${currentHeroId}-background.png")`;
       htmlEl.classList.add("hero-page");
     }
 

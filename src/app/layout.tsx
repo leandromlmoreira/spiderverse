@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import "./globals.scss";
 
+import { basePath } from "./basePath";
+
 export const metadata: Metadata = {
   title: "Aranha Verso",
   description:
@@ -20,21 +22,26 @@ export default function RootLayout({
       <body>
         <header>
           <Image
-            src="/icons/menu.svg"
+            src={`${basePath}/icons/menu.svg`}
             alt="Opções de Menu"
             width={36}
             height={25}
           />
           <Link href="/">
             <Image
-              src="/spider-logo.svg"
+              src={`${basePath}/spider-logo.svg`}
               alt="Spiderman"
               width={260}
               height={70}
               className="logo-animation"
             />
           </Link>
-          <Image src="/icons/user.svg" alt="Login" width={36} height={25} />
+          <Image
+            src={`${basePath}/icons/user.svg`}
+            alt="Login"
+            width={36}
+            height={25}
+          />
         </header>
         {children}
       </body>
