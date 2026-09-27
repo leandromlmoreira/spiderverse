@@ -1,6 +1,7 @@
 "use client";
 
-import { MotionValue, PanInfo, motion, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { MotionValue, PanInfo, animate, motion, useSpring, useTransform, useVelocity } from "framer-motion";
 
 import StageFigure from "./StageFigure";
 import styles from "./heroStage.module.scss";
@@ -12,43 +13,76 @@ interface IProps {
   heroes: IHeroData[];
   index: number;
   shift: number;
+  ready: boolean;
   onStep: (delta: number) => void;
   dragX: MotionValue<number>;
   pointerX: MotionValue<number>;
   pointerY: MotionValue<number>;
 }
 
-const SWIPE_DISTANCE = 64;
-const SWIPE_VELOCITY = 420;
+const SWIPE_VELOCITY = 380;
 
 function relativeOffset(position: number, active: number, total: number) {
   const half = Math.floor(total / 2);
   return ((((position - active) % total) + total + half) % total) - half;
 }
 
-export default function HeroStage({ heroes, index, shift, onStep, dragX, pointerX, pointerY }: IProps) {
+export default function HeroStage({ heroes, index, shift, ready, onStep, dragX, pointerX, pointerY }: IProps) {
   const compact = useMediaQuery("(max-width: 768px)");
+  const stageRef = useRef<HTMLDivElement>(null);
+  const touched = useRef(false);
   const springX = useSpring(pointerX, { stiffness: 80, damping: 20 });
   const springY = useSpring(pointerY, { stiffness: 80, damping: 20 });
   const tiltX = useTransform(springX, (value) => value * 16);
   const tiltY = useTransform(springY, (value) => value * 10);
+  const turnY = useTransform(springX, (value) => value * 5);
+  const turnX = useTransform(springY, (value) => value * -3);
+  const velocity = useVelocity(dragX);
+  const skew = useSpring(useTransform(velocity, [-2400, 0, 2400], [9, 0, -9], { clamp: true }), {
+    stiffness: 300,
+    damping: 30,
+  });
+
+  useEffect(() => {
+    if (!compact || !ready || shift > 0) return;
+    const timer = window.setTimeout(() => {
+      if (touched.current) return;
+      animate(dragX, [0, -46, 0], { duration: 1.1, ease: [0.45, 0, 0.2, 1], times: [0, 0.4, 1] });
+    }, 900);
+    return () => window.clearTimeout(timer);
+  }, [compact, ready, shift, dragX]);
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
-    if (info.offset.x < -SWIPE_DISTANCE || info.velocity.x < -SWIPE_VELOCITY) onStep(1);
-    else if (info.offset.x > SWIPE_DISTANCE || info.velocity.x > SWIPE_VELOCITY) onStep(-1);
+    const width = stageRef.current?.clientWidth ?? 400;
+    const distance = Math.min(80, width * 0.16);
+    const delta =
+      info.offset.x < -distance || info.velocity.x < -SWIPE_VELOCITY
+        ? 1
+        : info.offset.x > distance || info.velocity.x > SWIPE_VELOCITY
+          ? -1
+          : 0;
+    if (delta === 0) return;
+    if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(8);
+    onStep(delta);
   };
 
   return (
     <motion.div
+      ref={stageRef}
       className={styles.stage}
       drag="x"
+      dragDirectionLock
       dragSnapToOrigin
-      dragElastic={0.22}
-      dragTransition={{ bounceStiffness: 380, bounceDamping: 32 }}
+      dragElastic={0.28}
+      dragMomentum={false}
+      dragTransition={{ bounceStiffness: 420, bounceDamping: 34 }}
+      onDragStart={() => {
+        touched.current = true;
+      }}
       onDragEnd={handleDragEnd}
       style={{ x: dragX }}
     >
-      <motion.div className={styles.parallax} style={{ x: tiltX, y: tiltY }}>
+      <motion.div className={styles.parallax} style={{ x: tiltX, y: tiltY, rotateY: turnY, rotateX: turnX, skewX: skew }}>
         <div className={styles.floor} />
         {heroes.map((hero, position) => (
           <StageFigure

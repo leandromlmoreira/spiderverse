@@ -1,9 +1,12 @@
+export type SfxMotion = "stretch" | "pulse" | "jolt" | "glitch" | "wobble" | "punch" | "zoom";
+
 export interface IUniverseTheme {
   base: string;
   glow: string;
   primary: string;
   secondary: string;
   sfx: string;
+  sfxMotion: SfxMotion;
   tagline: string;
   scale: number;
   monochrome?: boolean;
@@ -15,6 +18,7 @@ const defaultTheme: IUniverseTheme = {
   primary: "#ff2d55",
   secondary: "#2dd4ff",
   sfx: "THWIP!",
+  sfxMotion: "stretch",
   tagline: "Mais um portal aberto no multiverso.",
   scale: 1,
 };
@@ -26,6 +30,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#ff3340",
     secondary: "#2f63ff",
     sfx: "THWIP!",
+    sfxMotion: "stretch",
     tagline: "Veterano de mil batalhas e ainda tentando pagar o aluguel em dia.",
     scale: 1,
   },
@@ -35,6 +40,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#ff5fae",
     secondary: "#3fe0ee",
     sfx: "BA-DUM!",
+    sfxMotion: "pulse",
     tagline: "Baterista de dia, heroína de noite. Sempre no compasso certo.",
     scale: 1,
   },
@@ -44,6 +50,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#ff2a3d",
     secondary: "#9b5cff",
     sfx: "ZAP!",
+    sfxMotion: "jolt",
     tagline: "O novato do Brooklyn que aprendeu a saltar antes de aprender a cair.",
     scale: 1,
   },
@@ -53,6 +60,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#ff6cb8",
     secondary: "#26d9c7",
     sfx: "BZZT!",
+    sfxMotion: "glitch",
     tagline: "Pilota um robô-aranha ligado direto à mente. Sincronia total.",
     scale: 0.9,
   },
@@ -62,6 +70,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#ffd23f",
     secondary: "#ff3b30",
     sfx: "OINK!",
+    sfxMotion: "wobble",
     tagline: "Um porco com poderes de aranha. Não pergunte como. Só aceite.",
     scale: 0.7,
   },
@@ -71,6 +80,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#f2f2f2",
     secondary: "#8f8f8f",
     sfx: "BANG!",
+    sfxMotion: "punch",
     tagline: "Nova York, anos 30. A justiça aqui só existe em preto e branco.",
     scale: 1,
     monochrome: true,
@@ -81,6 +91,7 @@ const themes: Record<string, IUniverseTheme> = {
     primary: "#3d86ff",
     secondary: "#ff2a3d",
     sfx: "ZWOOM!",
+    sfxMotion: "zoom",
     tagline: "Direto de 2099, onde cada salto entre prédios é guiado por neon.",
     scale: 1,
   },
