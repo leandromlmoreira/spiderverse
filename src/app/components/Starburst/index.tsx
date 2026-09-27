@@ -5,6 +5,7 @@ interface IProps {
   fill: string;
   className?: string;
   spikes?: number;
+  splitLetters?: boolean;
 }
 
 function burstPoints(spikes: number) {
@@ -18,14 +19,22 @@ function burstPoints(spikes: number) {
   return points.join(" ");
 }
 
-export default function Starburst({ word, fill, className, spikes = 13 }: IProps) {
+export default function Starburst({ word, fill, className, spikes = 13, splitLetters = false }: IProps) {
   return (
     <div className={`${styles.burst} ${className ?? ""}`} aria-hidden>
       <svg viewBox="-4 -4 108 108" className={styles.shape}>
         <polygon points={burstPoints(spikes)} transform="translate(4 3)" className={styles.shadow} />
         <polygon points={burstPoints(spikes)} style={{ fill }} className={styles.body} />
       </svg>
-      <span className={styles.word}>{word}</span>
+      <span className={styles.word}>
+        {splitLetters
+          ? Array.from(word).map((letter, index) => (
+              <span key={index} className={styles.letter} style={{ "--i": index } as React.CSSProperties}>
+                {letter}
+              </span>
+            ))
+          : word}
+      </span>
     </div>
   );
 }

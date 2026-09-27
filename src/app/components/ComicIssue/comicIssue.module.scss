@@ -40,7 +40,6 @@
 }
 
 .back {
-  justify-self: end;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -88,25 +87,75 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
     "splash splash splash splash splash splash splash splash profile profile profile profile"
-    "splash splash splash splash splash splash splash splash quote quote quote quote"
-    "height height height height weight weight weight weight cover cover cover cover"
+    "splash splash splash splash splash splash splash splash dialogue dialogue dialogue dialogue"
+    "card card card card card trivia trivia trivia trivia trivia trivia trivia"
+    "card card card card card height height height weight weight weight weight"
+    "card card card card card cover cover cover cover cover cover cover"
     "nav nav nav nav nav nav nav nav nav nav nav nav";
   gap: 16px;
   max-width: 1320px;
   margin: 0 auto;
 }
 
+.mastEnd {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .footer {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 16px;
+  gap: 24px;
   max-width: 1320px;
-  margin: 28px auto 0;
+  margin: 36px auto 0;
+  padding-top: 20px;
+  border-top: 3.5px solid var(--ink);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(13, 13, 18, 0.55);
+  color: rgba(13, 13, 18, 0.7);
+}
+
+.footerStart {
+  display: grid;
+  gap: 6px;
+}
+
+.footerEnd {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.keys {
+  display: inline-flex;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.12em;
+
+  kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 24px;
+    height: 24px;
+    border: 1.5px solid rgba(13, 13, 18, 0.45);
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
+  @media (pointer: coarse) {
+    display: none;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -114,9 +163,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       "splash splash"
-      "profile quote"
+      "profile dialogue"
+      "card trivia"
+      "card cover"
       "height weight"
-      "cover cover"
       "nav nav";
   }
 }
@@ -155,7 +205,9 @@
     grid-template-areas:
       "splash"
       "profile"
-      "quote"
+      "dialogue"
+      "card"
+      "trivia"
       "height"
       "weight"
       "cover"
@@ -165,7 +217,8 @@
 
   .footer {
     flex-direction: column;
-    gap: 6px;
+    align-items: flex-start;
+    gap: 22px;
     letter-spacing: 0.14em;
   }
 }

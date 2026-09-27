@@ -22,7 +22,7 @@ export default function WeightPanel({ weight }: { weight: number }) {
   const end = arcPoint(1, 50);
 
   return (
-    <Panel area="weight" order={4} tone="ink" label="Peso" from="bottom">
+    <Panel area="weight" order={6} tone="ink" label="Peso" from="bottom">
       <div className={styles.body}>
         <p className={styles.value}>
           {formatDecimal(weight)}

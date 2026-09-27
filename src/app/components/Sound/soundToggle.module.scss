@@ -32,8 +32,19 @@
     box-shadow: 3px 3px 0 var(--ink);
   }
 
+  &[data-tone="light"] {
+    border-color: var(--ink);
+    background: #fffdf6;
+    color: var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  &[data-tone="light"][aria-pressed="true"] {
+    background: var(--yellow);
+  }
+
   @media (max-width: 520px) {
-    span:last-child {
+    .label {
       position: absolute;
       width: 1px;
       height: 1px;

@@ -2,13 +2,17 @@
 
 import { motion } from "framer-motion";
 
+import PageSheet from "./PageSheet";
 import styles from "./transition.module.scss";
 
-type Phase = "idle" | "covering" | "covered" | "revealing";
+export type Phase = "idle" | "covering" | "covered" | "revealing";
+export type Variant = "curtain" | "page";
 
 interface IProps {
   phase: Phase;
   label: string;
+  variant: Variant;
+  direction: 1 | -1;
   onCovered: () => void;
   onRevealed: () => void;
 }
@@ -22,11 +26,9 @@ function stripeTarget(phase: Phase) {
   return "translateX(0%) skewX(-14deg)";
 }
 
-export default function TransitionCurtain({ phase, label, onCovered, onRevealed }: IProps) {
-  const active = phase !== "idle";
-
+function Stripes({ phase, label, onCovered, onRevealed }: Omit<IProps, "variant" | "direction">) {
   return (
-    <div className={styles.curtain} data-active={active} aria-hidden={!active}>
+    <>
       {STRIPES.map((tone, index) => {
         const isLast = index === STRIPES.length - 1;
         return (
@@ -35,11 +37,7 @@ export default function TransitionCurtain({ phase, label, onCovered, onRevealed 
             className={`${styles.stripe} ${styles[tone]}`}
             initial={false}
             animate={{ transform: stripeTarget(phase) }}
-            transition={
-              phase === "idle"
-                ? { duration: 0 }
-                : { duration: 0.5, ease: EASE, delay: index * 0.06 }
-            }
+            transition={phase === "idle" ? { duration: 0 } : { duration: 0.42, ease: EASE, delay: index * 0.05 }}
             onAnimationComplete={() => {
               if (!isLast) return;
               if (phase === "covering") onCovered();
@@ -56,10 +54,32 @@ export default function TransitionCurtain({ phase, label, onCovered, onRevealed 
             ? { opacity: 1, transform: "scale(1) rotate(-4deg)" }
             : { opacity: 0, transform: "scale(0.86) rotate(-8deg)" }
         }
-        transition={{ duration: 0.32, ease: [0.23, 1, 0.32, 1], delay: phase === "covering" ? 0.28 : 0 }}
+        transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1], delay: phase === "covering" ? 0.24 : 0 }}
       >
         {label}
       </motion.p>
+    </>
+  );
+}
+
+export default function TransitionCurtain({ phase, label, variant, direction, onCovered, onRevealed }: IProps) {
+  const active = phase !== "idle";
+
+  return (
+    <div className={styles.curtain} data-active={active} data-variant={variant} aria-hidden={!active}>
+      <Stripes
+        phase={variant === "curtain" ? phase : "idle"}
+        label={label}
+        onCovered={onCovered}
+        onRevealed={onRevealed}
+      />
+      <PageSheet
+        phase={variant === "page" ? phase : "idle"}
+        label={label}
+        direction={direction}
+        onCovered={onCovered}
+        onRevealed={onRevealed}
+      />
     </div>
   );
 }

@@ -1,0 +1,53 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 16px 0 5px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 var(--magenta);
+  transform: rotate(-1.5deg);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: rotate(0deg) translate(-1px, -1px);
+      box-shadow: 5px 5px 0 var(--magenta);
+    }
+
+    &:hover .icon {
+      transform: rotate(45deg);
+    }
+  }
+
+  &:active {
+    transform: translate(2px, 2px) scale(0.98);
+    box-shadow: 1px 1px 0 var(--magenta);
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: transform 400ms var(--ease-out);
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--yellow);
+    stroke-width: 1.8;
+  }
+}

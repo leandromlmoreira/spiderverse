@@ -4,12 +4,17 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { usePathname, useRouter } from "next/navigation";
 import { useReducedMotion } from "framer-motion";
 
-import TransitionCurtain from "./TransitionCurtain";
+import { useSound } from "../Sound/SoundProvider";
 
-type Phase = "idle" | "covering" | "covered" | "revealing";
+import TransitionCurtain, { Phase, Variant } from "./TransitionCurtain";
+
+export interface INavigateOptions {
+  variant?: Variant;
+  direction?: 1 | -1;
+}
 
 interface ITransitionContext {
-  navigate: (href: string, label: string) => void;
+  navigate: (href: string, label: string, options?: INavigateOptions) => void;
 }
 
 const TransitionContext = createContext<ITransitionContext>({ navigate: () => {} });
@@ -22,24 +27,31 @@ export default function TransitionProvider({ children }: { children: React.React
   const router = useRouter();
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
+  const { cue } = useSound();
   const [phase, setPhase] = useState<Phase>("idle");
   const [label, setLabel] = useState("");
+  const [variant, setVariant] = useState<Variant>("curtain");
+  const [direction, setDirection] = useState<1 | -1>(1);
   const target = useRef<string | null>(null);
   const departedFrom = useRef(pathname);
 
   const navigate = useCallback(
-    (href: string, nextLabel: string) => {
+    (href: string, nextLabel: string, options: INavigateOptions = {}) => {
       if (phase !== "idle") return;
       if (reduceMotion) {
         router.push(href);
         return;
       }
+      const nextVariant = options.variant ?? "curtain";
       target.current = href;
       departedFrom.current = pathname;
       setLabel(nextLabel);
+      setVariant(nextVariant);
+      setDirection(options.direction ?? 1);
       setPhase("covering");
+      cue(nextVariant === "page" ? "page" : "swoosh");
     },
-    [phase, pathname, reduceMotion, router]
+    [phase, pathname, reduceMotion, router, cue]
   );
 
   const handleCovered = useCallback(() => {
@@ -52,6 +64,7 @@ export default function TransitionProvider({ children }: { children: React.React
   useEffect(() => {
     if (phase !== "covered") return;
     if (pathname !== departedFrom.current) {
+      window.scrollTo(0, 0);
       setPhase("revealing");
       return;
     }
@@ -65,6 +78,8 @@ export default function TransitionProvider({ children }: { children: React.React
       <TransitionCurtain
         phase={phase}
         label={label}
+        variant={variant}
+        direction={direction}
         onCovered={handleCovered}
         onRevealed={() => setPhase("idle")}
       />

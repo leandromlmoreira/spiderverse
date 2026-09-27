@@ -55,7 +55,7 @@ export default function StageFigure({ hero, offset, shift, compact }: IProps) {
         opacity: slot.opacity,
         filter: `blur(${slot.blur}px) brightness(${slot.brightness})`,
       }}
-      transition={{ duration: 0.85, ease: [0.77, 0, 0.175, 1] }}
+      transition={{ duration: 0.58, ease: [0.7, 0, 0.2, 1] }}
       style={{ zIndex: slot.zIndex }}
       aria-hidden={!isCenter}
     >
@@ -64,17 +64,19 @@ export default function StageFigure({ hero, offset, shift, compact }: IProps) {
         className={cx(styles.figureInner, isCenter && styles.registered, theme.monochrome && styles.mono)}
         style={{ height: `${theme.scale * 100}%` }}
       >
-        {art ? (
-          <Image
-            src={art.figure}
-            alt={isCenter ? `${hero.name} da Terra-${hero.universe}` : ""}
-            priority={Math.abs(offset) <= 1}
-            draggable={false}
-            sizes="(max-width: 768px) 80vw, 40vw"
-          />
-        ) : (
-          <div className={styles.silhouette} />
-        )}
+        <div className={cx(styles.breath, isCenter && styles.breathing)}>
+          {art ? (
+            <Image
+              src={art.figure}
+              alt={isCenter ? `${hero.name} da Terra-${hero.universe}` : ""}
+              priority={Math.abs(offset) <= 1}
+              draggable={false}
+              sizes="(max-width: 768px) 80vw, 40vw"
+            />
+          ) : (
+            <div className={styles.silhouette} />
+          )}
+        </div>
       </div>
     </motion.div>
   );

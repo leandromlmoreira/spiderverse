@@ -18,7 +18,7 @@
     font-weight: 800;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(13, 13, 18, 0.55);
+    color: rgba(13, 13, 18, 0.72);
   }
 
   dd {
@@ -35,14 +35,12 @@
   right: 18px;
   top: 18px;
   padding: 4px 10px;
-  border: 3px solid var(--primary);
+  border: 3px solid color-mix(in srgb, var(--primary) 55%, var(--ink));
   border-radius: 6px;
-  color: var(--primary);
+  color: color-mix(in srgb, var(--primary) 55%, var(--ink));
   font-family: var(--font-display);
   font-size: 1.05rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   transform: rotate(8deg);
-  opacity: 0.85;
-  mix-blend-mode: multiply;
 }

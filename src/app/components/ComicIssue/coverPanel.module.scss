@@ -1,7 +1,10 @@
 .panel {
   display: grid;
-  place-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
   min-height: 250px;
+  padding: 44px 22px 22px;
   overflow: hidden;
 }
 
@@ -9,67 +12,65 @@
   position: absolute;
   inset: -30%;
   z-index: -1;
-  background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(13, 13, 18, 0.08) 0deg 6deg, transparent 6deg 14deg);
+  background: repeating-conic-gradient(from 0deg at 30% 55%, rgba(13, 13, 18, 0.08) 0deg 6deg, transparent 6deg 14deg);
 }
 
 .cover {
-  margin: 28px 0 8px;
+  margin: 0;
   padding: 6px;
   background: #fffdf6;
   border: 3px solid var(--ink);
   box-shadow: 8px 8px 0 var(--ink);
 
   img {
-    width: 128px;
+    width: 118px;
     height: auto;
   }
 }
 
 .missing {
-  margin: 36px 0 0;
+  margin: 0;
   font-family: var(--font-display);
   font-size: 1.6rem;
-  text-align: center;
 }
 
-.note {
-  position: absolute;
-  right: 16px;
-  bottom: 14px;
+.info {
   display: grid;
-  margin: 0;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-align: right;
-  text-transform: uppercase;
+  gap: 12px;
+}
 
-  strong {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    line-height: 0.9;
+.issue {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.creators {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.2;
+
+  span {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: var(--magenta);
   }
 }
 
-@media (max-width: 768px) {
-  .panel {
-    min-height: 300px;
+@media (max-width: 420px) {
+  .cover img {
+    width: 96px;
   }
 
-  .cover {
-    margin-top: 44px;
-  }
-
-  .note {
-    top: 12px;
-    bottom: auto;
-    right: 14px;
-
-    strong {
-      font-size: 1.6rem;
-    }
+  .issue {
+    font-size: 1.4rem;
   }
 }
