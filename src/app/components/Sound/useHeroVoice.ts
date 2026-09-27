@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { useSound } from "./SoundProvider";
+
 import { basePath } from "@/app/basePath";
 
 function play(audio: HTMLAudioElement, volume: number) {
@@ -10,21 +12,18 @@ function play(audio: HTMLAudioElement, volume: number) {
   audio.play().catch(() => {});
 }
 
-export function useHeroVoice(heroId: string, enabled: boolean) {
+export function useHeroVoice(heroId: string, shift: number) {
+  const { enabled, cue } = useSound();
   const cache = useRef<Map<string, HTMLAudioElement>>(new Map());
 
   useEffect(() => {
     if (!enabled) return;
-    const load = (name: string) => {
-      const existing = cache.current.get(name);
-      if (existing) return existing;
-      const audio = new Audio(`${basePath}/songs/${name}.mp3`);
-      cache.current.set(name, audio);
-      return audio;
-    };
-    play(load("transition"), 0.5);
-    play(load(heroId), 0.35);
-  }, [heroId, enabled]);
+    const existing = cache.current.get(heroId);
+    const audio = existing ?? new Audio(`${basePath}/songs/${heroId}.mp3`);
+    if (!existing) cache.current.set(heroId, audio);
+    if (shift > 0) cue("swoosh");
+    play(audio, 0.35);
+  }, [heroId, shift, enabled, cue]);
 
   useEffect(() => {
     const audios = cache.current;

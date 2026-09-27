@@ -55,3 +55,67 @@
   text-align: center;
   max-width: calc(100vw - 32px);
 }
+
+.curtain {
+  perspective: 1800px;
+}
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.sheetPaper {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 24px;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, rgba(13, 13, 18, 0.09) 1.1px, transparent 1.5px);
+  background-size: 8px 8px;
+  box-shadow: inset 0 0 0 12px var(--paper), inset 0 0 0 16px var(--ink);
+  text-align: center;
+}
+
+.sheetKicker,
+.sheetFoot {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.sheetFoot {
+  position: absolute;
+  right: 40px;
+  bottom: 34px;
+  color: var(--magenta);
+}
+
+.sheetLabel {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-shadow: -4px 0 rgba(0, 212, 255, 0.8), 4px 2px rgba(255, 31, 143, 0.8);
+  transform: rotate(-3deg);
+}
+
+.sheetShade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(13, 13, 18, 0.6), rgba(13, 13, 18, 0) 70%);
+
+  &[data-direction="-1"] {
+    background: linear-gradient(270deg, rgba(13, 13, 18, 0.6), rgba(13, 13, 18, 0) 70%);
+  }
+}

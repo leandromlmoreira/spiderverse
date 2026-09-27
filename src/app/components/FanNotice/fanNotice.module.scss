@@ -1,0 +1,13 @@
+.notice {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+
+  &[data-tone="light"] {
+    color: rgba(13, 13, 18, 0.72);
+  }
+}
