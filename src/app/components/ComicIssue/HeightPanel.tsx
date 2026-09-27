@@ -14,7 +14,7 @@ export default function HeightPanel({ height }: { height: number }) {
   const ratio = Math.min(height / SCALE_MAX, 1);
 
   return (
-    <Panel area="height" order={3} tone="paper" label="Altura" from="left">
+    <Panel area="height" order={5} tone="paper" label="Altura" from="left">
       <div className={styles.body}>
         <p className={styles.value}>
           {formatDecimal(height)}

@@ -7,13 +7,14 @@ import Panel from "./Panel";
 import styles from "./coverPanel.module.scss";
 
 import { IHeroData } from "@/app/interfaces/heroes";
+import { IHeroLore } from "@/app/data/lore";
 import { getHeroArt } from "@/app/data/heroArt";
 
-export default function CoverPanel({ hero }: { hero: IHeroData }) {
+export default function CoverPanel({ hero, lore }: { hero: IHeroData; lore: IHeroLore }) {
   const art = getHeroArt(hero.id);
 
   return (
-    <Panel area="cover" order={5} tone="yellow" label="Primeira aparição" from="right" className={styles.panel}>
+    <Panel area="cover" order={6} tone="yellow" label="Primeira aparição" from="right" className={styles.panel}>
       <div className={styles.rays} aria-hidden />
       {art ? (
         <motion.figure
@@ -32,10 +33,13 @@ export default function CoverPanel({ hero }: { hero: IHeroData }) {
       ) : (
         <p className={styles.missing}>Capa perdida entre universos.</p>
       )}
-      <p className={styles.note}>
-        Colecionável
-        <strong>#1</strong>
-      </p>
+      <div className={styles.info}>
+        <p className={styles.issue}>{lore.firstAppearance}</p>
+        <p className={styles.creators}>
+          <span>Criação</span>
+          {lore.creators}
+        </p>
+      </div>
     </Panel>
   );
 }

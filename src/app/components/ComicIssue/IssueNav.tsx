@@ -20,25 +20,27 @@ function IssueLink({ hero, direction }: { hero: IHeroData; direction: "previous"
 
   return (
     <TransitionLink
-      href={`/hero/${hero.id}`}
-      label={`Edição #${hero.universe}`}
+      href={`/hero/${hero.id}/`}
+      label={hero.name}
+      transition={{ variant: "page", direction: direction === "next" ? 1 : -1 }}
       className={styles.link}
       data-direction={direction}
       style={{ "--hover": theme.primary } as React.CSSProperties}
     >
       <span className={styles.thumb}>{art && <Image src={art.figure} alt="" sizes="72px" />}</span>
       <span className={styles.text}>
-        <small>{direction === "previous" ? "Edição anterior" : "Próxima edição"}</small>
+        <small>{direction === "previous" ? "← Edição anterior" : "Vire a página →"}</small>
         <strong>{hero.name}</strong>
         <em>Terra-{hero.universe}</em>
       </span>
+      <span className={styles.curl} aria-hidden />
     </TransitionLink>
   );
 }
 
 export default function IssueNav({ previous, next }: IProps) {
   return (
-    <Panel area="nav" order={6} tone="white" className={styles.panel} from="left">
+    <Panel area="nav" order={7} tone="white" className={styles.panel} from="left">
       <IssueLink hero={previous} direction="previous" />
       <p className={styles.continues} aria-hidden>
         Continua...
